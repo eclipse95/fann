@@ -48,9 +48,9 @@ void fann_print_connections_raw(struct fann *ann)
 FANN_EXTERNAL void FANN_API fann_cascadetrain_on_data(struct fann *ann, struct fann_train_data *data,
 										unsigned int max_neurons,
 										unsigned int neurons_between_reports,
-										float desired_error)
+										double desired_error)
 {
-	float error;
+	double error;
 	unsigned int i;
 	unsigned int total_epochs = 0;
 	int desired_error_reached;
@@ -128,7 +128,7 @@ FANN_EXTERNAL void FANN_API fann_cascadetrain_on_data(struct fann *ann, struct f
 FANN_EXTERNAL void FANN_API fann_cascadetrain_on_file(struct fann *ann, const char *filename,
 													  unsigned int max_neurons,
 													  unsigned int neurons_between_reports,
-													  float desired_error)
+													  double desired_error)
 {
 	struct fann_train_data *data = fann_read_train_from_file(filename);
 
@@ -140,11 +140,11 @@ FANN_EXTERNAL void FANN_API fann_cascadetrain_on_file(struct fann *ann, const ch
 	fann_destroy_train(data);
 }
 
-int fann_train_outputs(struct fann *ann, struct fann_train_data *data, float desired_error)
+int fann_train_outputs(struct fann *ann, struct fann_train_data *data, double desired_error)
 {
-	float error, initial_error, error_improvement;
-	float target_improvement = 0.0;
-	float backslide_improvement = -1.0e20f;
+	double error, initial_error, error_improvement;
+	double target_improvement = 0.0;
+	double backslide_improvement = -1.0e20f;
 	unsigned int i;
 	unsigned int max_epochs = ann->cascade_max_out_epochs;
 	unsigned int min_epochs = ann->cascade_min_out_epochs;
@@ -201,7 +201,7 @@ int fann_train_outputs(struct fann *ann, struct fann_train_data *data, float des
 	return max_epochs;
 }
 
-float fann_train_outputs_epoch(struct fann *ann, struct fann_train_data *data)
+double fann_train_outputs_epoch(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 	
@@ -338,7 +338,7 @@ int fann_reallocate_neurons(struct fann *ann, unsigned int total_neurons)
 	return 0;
 }
 
-void initialize_candidate_weights(struct fann *ann, unsigned int first_con, unsigned int last_con, float scale_factor)
+void initialize_candidate_weights(struct fann *ann, unsigned int first_con, unsigned int last_con, double scale_factor)
 {
 	fann_type prev_step;
 	unsigned int i = 0;
@@ -384,7 +384,7 @@ int fann_initialize_candidates(struct fann *ann)
 	unsigned int first_candidate_neuron = ann->total_neurons + 1;
 	unsigned int connection_it, i, j, k, candidate_index;
 	struct fann_neuron *neurons;
-	float scale_factor;
+	double scale_factor;
 	
 	/* First make sure that there is enough room, and if not then allocate a
 	 * bit more so that we do not need to allocate more room each time.
@@ -425,7 +425,7 @@ int fann_initialize_candidates(struct fann *ann)
 	}
 
 	/* Some code to do semi Widrow + Nguyen initialization */
-	scale_factor = (float) (2.0 * pow(0.7f * (float)num_hidden_neurons, 1.0f / (float) ann->num_input));
+	scale_factor = (double) (2.0 * pow(0.7f * (double)num_hidden_neurons, 1.0f / (double) ann->num_input));
 	if(scale_factor > 8)
 		scale_factor = 8;
 	else if(scale_factor < 0.5)
@@ -978,9 +978,9 @@ FANN_EXTERNAL unsigned int FANN_API fann_get_cascade_num_candidates(struct fann 
 		ann->cascade_num_candidate_groups;
 }
 
-FANN_GET_SET(float, cascade_output_change_fraction)
+FANN_GET_SET(double, cascade_output_change_fraction)
 FANN_GET_SET(unsigned int, cascade_output_stagnation_epochs)
-FANN_GET_SET(float, cascade_candidate_change_fraction)
+FANN_GET_SET(double, cascade_candidate_change_fraction)
 FANN_GET_SET(unsigned int, cascade_candidate_stagnation_epochs)
 FANN_GET_SET(unsigned int, cascade_num_candidate_groups)
 FANN_GET_SET(fann_type, cascade_weight_multiplier)

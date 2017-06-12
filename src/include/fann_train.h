@@ -114,7 +114,7 @@ FANN_EXTERNAL fann_type * FANN_API fann_test(struct fann *ann, fann_type * input
 
 	This function appears in FANN >= 1.1.0.
  */ 
-FANN_EXTERNAL float FANN_API fann_get_MSE(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_MSE(struct fann *ann);
 
 /* Function: fann_get_bit_fail
 	
@@ -176,7 +176,7 @@ FANN_EXTERNAL void FANN_API fann_reset_MSE(struct fann *ann);
 FANN_EXTERNAL void FANN_API fann_train_on_data(struct fann *ann, struct fann_train_data *data,
 											   unsigned int max_epochs,
 											   unsigned int epochs_between_reports,
-											   float desired_error);
+											   double desired_error);
 
 /* Function: fann_train_on_file
    
@@ -190,7 +190,7 @@ FANN_EXTERNAL void FANN_API fann_train_on_data(struct fann *ann, struct fann_tra
 FANN_EXTERNAL void FANN_API fann_train_on_file(struct fann *ann, const char *filename,
 											   unsigned int max_epochs,
 											   unsigned int epochs_between_reports,
-											   float desired_error);
+											   double desired_error);
 
 /* Function: fann_train_epoch
    Train one epoch with a set of training data.
@@ -211,9 +211,9 @@ FANN_EXTERNAL void FANN_API fann_train_on_file(struct fann *ann, const char *fil
 		
 	This function appears in FANN >= 1.2.0.
  */ 
-FANN_EXTERNAL float FANN_API fann_train_epoch(struct fann *ann, struct fann_train_data *data);
-FANN_EXTERNAL float FANN_API fann_train_epoch_lw(struct fann *ann, struct fann_train_data *data, fann_type* label_weight);
-FANN_EXTERNAL float FANN_API fann_train_epoch_irpropm_gradient(struct fann *ann, struct fann_train_data *data, fann_type (*errorFunction)(fann_type*,fann_type*,int,void*),void*);
+FANN_EXTERNAL double FANN_API fann_train_epoch(struct fann *ann, struct fann_train_data *data);
+FANN_EXTERNAL double FANN_API fann_train_epoch_lw(struct fann *ann, struct fann_train_data *data, fann_type* label_weight);
+FANN_EXTERNAL double FANN_API fann_train_epoch_irpropm_gradient(struct fann *ann, struct fann_train_data *data, fann_type (*errorFunction)(fann_type*,fann_type*,int,void*),void*);
 FANN_EXTERNAL void FANN_API fann_compute_MSE_gradient(struct fann *, fann_type *, fann_type (*errorFunction)(fann_type*,fann_type*,int,void*), void*);
 FANN_EXTERNAL void FANN_API fann_backpropagate_MSE_firstlayer(struct fann *);
 #endif	/* NOT FIXEDFANN */
@@ -229,7 +229,7 @@ FANN_EXTERNAL void FANN_API fann_backpropagate_MSE_firstlayer(struct fann *);
 
 	This function appears in FANN >= 1.2.0.
  */ 
-FANN_EXTERNAL float FANN_API fann_test_data(struct fann *ann, struct fann_train_data *data);
+FANN_EXTERNAL double FANN_API fann_test_data(struct fann *ann, struct fann_train_data *data);
 
 /* Group: Training Data Manipulation */
 
@@ -459,8 +459,8 @@ FANN_EXTERNAL void FANN_API fann_descale_train( struct fann *ann, struct fann_tr
 FANN_EXTERNAL int FANN_API fann_set_input_scaling_params(
 	struct fann *ann,
 	const struct fann_train_data *data,
-	float new_input_min,
-	float new_input_max);
+	double new_input_min,
+	double new_input_max);
 
 /* Function: fann_set_output_scaling_params
 
@@ -480,8 +480,8 @@ FANN_EXTERNAL int FANN_API fann_set_input_scaling_params(
 FANN_EXTERNAL int FANN_API fann_set_output_scaling_params(
 	struct fann *ann,
 	const struct fann_train_data *data,
-	float new_output_min,
-	float new_output_max);
+	double new_output_min,
+	double new_output_max);
 
 /* Function: fann_set_scaling_params
 
@@ -503,10 +503,10 @@ FANN_EXTERNAL int FANN_API fann_set_output_scaling_params(
 FANN_EXTERNAL int FANN_API fann_set_scaling_params(
 	struct fann *ann,
 	const struct fann_train_data *data,
-	float new_input_min,
-	float new_input_max,
-	float new_output_min,
-	float new_output_max);
+	double new_input_min,
+	double new_input_max,
+	double new_output_min,
+	double new_output_max);
 
 /* Function: fann_clear_scaling_params
 
@@ -791,7 +791,7 @@ FANN_EXTERNAL void FANN_API fann_set_training_algorithm(struct fann *ann,
    
    This function appears in FANN >= 1.0.0.   	
  */ 
-FANN_EXTERNAL float FANN_API fann_get_learning_rate(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_learning_rate(struct fann *ann);
 
 
 /* Function: fann_set_learning_rate
@@ -802,7 +802,7 @@ FANN_EXTERNAL float FANN_API fann_get_learning_rate(struct fann *ann);
 
    This function appears in FANN >= 1.0.0.   	
  */ 
-FANN_EXTERNAL void FANN_API fann_set_learning_rate(struct fann *ann, float learning_rate);
+FANN_EXTERNAL void FANN_API fann_set_learning_rate(struct fann *ann, double learning_rate);
 
 /* Function: fann_get_learning_momentum
 
@@ -820,7 +820,7 @@ FANN_EXTERNAL void FANN_API fann_set_learning_rate(struct fann *ann, float learn
 
    This function appears in FANN >= 2.0.0.   	
  */ 
-FANN_EXTERNAL float FANN_API fann_get_learning_momentum(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_learning_momentum(struct fann *ann);
 
 
 /* Function: fann_set_learning_momentum
@@ -831,9 +831,9 @@ FANN_EXTERNAL float FANN_API fann_get_learning_momentum(struct fann *ann);
 
    This function appears in FANN >= 2.0.0.   	
  */ 
-FANN_EXTERNAL void FANN_API fann_set_learning_momentum(struct fann *ann, float learning_momentum);
-FANN_EXTERNAL float FANN_API fann_get_learning_l2_norm(struct fann *ann);
-FANN_EXTERNAL void FANN_API fann_set_learning_l2_norm(struct fann *ann, float learning_l2_norm);
+FANN_EXTERNAL void FANN_API fann_set_learning_momentum(struct fann *ann, double learning_momentum);
+FANN_EXTERNAL double FANN_API fann_get_learning_l2_norm(struct fann *ann);
+FANN_EXTERNAL void FANN_API fann_set_learning_l2_norm(struct fann *ann, double learning_l2_norm);
 
 /* Function: fann_get_activation_function
 
@@ -1157,7 +1157,7 @@ FANN_EXTERNAL void FANN_API fann_set_callback(struct fann *ann, fann_callback_ty
 
    This function appears in FANN >= 1.2.0.
  */
-FANN_EXTERNAL float FANN_API fann_get_quickprop_decay(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_quickprop_decay(struct fann *ann);
 
 
 /* Function: fann_set_quickprop_decay
@@ -1169,7 +1169,7 @@ FANN_EXTERNAL float FANN_API fann_get_quickprop_decay(struct fann *ann);
 
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL void FANN_API fann_set_quickprop_decay(struct fann *ann, float quickprop_decay);
+FANN_EXTERNAL void FANN_API fann_set_quickprop_decay(struct fann *ann, double quickprop_decay);
 
 
 /* Function: fann_get_quickprop_mu
@@ -1185,7 +1185,7 @@ FANN_EXTERNAL void FANN_API fann_set_quickprop_decay(struct fann *ann, float qui
 
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL float FANN_API fann_get_quickprop_mu(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_quickprop_mu(struct fann *ann);
 
 
 /* Function: fann_set_quickprop_mu
@@ -1197,7 +1197,7 @@ FANN_EXTERNAL float FANN_API fann_get_quickprop_mu(struct fann *ann);
 
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL void FANN_API fann_set_quickprop_mu(struct fann *ann, float quickprop_mu);
+FANN_EXTERNAL void FANN_API fann_set_quickprop_mu(struct fann *ann, double quickprop_mu);
 
 
 /* Function: fann_get_rprop_increase_factor
@@ -1212,7 +1212,7 @@ FANN_EXTERNAL void FANN_API fann_set_quickprop_mu(struct fann *ann, float quickp
 
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL float FANN_API fann_get_rprop_increase_factor(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_rprop_increase_factor(struct fann *ann);
 
 
 /* Function: fann_set_rprop_increase_factor
@@ -1225,7 +1225,7 @@ FANN_EXTERNAL float FANN_API fann_get_rprop_increase_factor(struct fann *ann);
    This function appears in FANN >= 1.2.0.
 */ 
 FANN_EXTERNAL void FANN_API fann_set_rprop_increase_factor(struct fann *ann,
-														   float rprop_increase_factor);
+														   double rprop_increase_factor);
 
 
 /* Function: fann_get_rprop_decrease_factor
@@ -1239,7 +1239,7 @@ FANN_EXTERNAL void FANN_API fann_set_rprop_increase_factor(struct fann *ann,
 
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL float FANN_API fann_get_rprop_decrease_factor(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_rprop_decrease_factor(struct fann *ann);
 
 
 /* Function: fann_set_rprop_decrease_factor
@@ -1252,7 +1252,7 @@ FANN_EXTERNAL float FANN_API fann_get_rprop_decrease_factor(struct fann *ann);
    This function appears in FANN >= 1.2.0.
 */
 FANN_EXTERNAL void FANN_API fann_set_rprop_decrease_factor(struct fann *ann,
-														   float rprop_decrease_factor);
+														   double rprop_decrease_factor);
 
 
 /* Function: fann_get_rprop_delta_min
@@ -1266,7 +1266,7 @@ FANN_EXTERNAL void FANN_API fann_set_rprop_decrease_factor(struct fann *ann,
    	
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL float FANN_API fann_get_rprop_delta_min(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_rprop_delta_min(struct fann *ann);
 
 
 /* Function: fann_set_rprop_delta_min
@@ -1278,7 +1278,7 @@ FANN_EXTERNAL float FANN_API fann_get_rprop_delta_min(struct fann *ann);
    	
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL void FANN_API fann_set_rprop_delta_min(struct fann *ann, float rprop_delta_min);
+FANN_EXTERNAL void FANN_API fann_set_rprop_delta_min(struct fann *ann, double rprop_delta_min);
 
 
 /* Function: fann_get_rprop_delta_max
@@ -1292,7 +1292,7 @@ FANN_EXTERNAL void FANN_API fann_set_rprop_delta_min(struct fann *ann, float rpr
 
    This function appears in FANN >= 1.2.0.
 */ 
-FANN_EXTERNAL float FANN_API fann_get_rprop_delta_max(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_rprop_delta_max(struct fann *ann);
 
 
 /* Function: fann_set_rprop_delta_max
@@ -1304,7 +1304,7 @@ FANN_EXTERNAL float FANN_API fann_get_rprop_delta_max(struct fann *ann);
 
    This function appears in FANN >= 1.2.0.
 */
-FANN_EXTERNAL void FANN_API fann_set_rprop_delta_max(struct fann *ann, float rprop_delta_max);
+FANN_EXTERNAL void FANN_API fann_set_rprop_delta_max(struct fann *ann, double rprop_delta_max);
 
 /* Function: fann_get_rprop_delta_zero
 
@@ -1317,7 +1317,7 @@ FANN_EXTERNAL void FANN_API fann_set_rprop_delta_max(struct fann *ann, float rpr
 
    This function appears in FANN >= 2.1.0.
 */ 
-FANN_EXTERNAL float FANN_API fann_get_rprop_delta_zero(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_rprop_delta_zero(struct fann *ann);
 
 
 /* Function: fann_set_rprop_delta_zero
@@ -1329,7 +1329,7 @@ FANN_EXTERNAL float FANN_API fann_get_rprop_delta_zero(struct fann *ann);
 
    This function appears in FANN >= 2.1.0.
 */
-FANN_EXTERNAL void FANN_API fann_set_rprop_delta_zero(struct fann *ann, float rprop_delta_max);
+FANN_EXTERNAL void FANN_API fann_set_rprop_delta_zero(struct fann *ann, double rprop_delta_max);
 
 /* Method: fann_get_sarprop_weight_decay_shift
 
@@ -1342,7 +1342,7 @@ FANN_EXTERNAL void FANN_API fann_set_rprop_delta_zero(struct fann *ann, float rp
 
    This function appears in FANN >= 2.1.0.
    */ 
-FANN_EXTERNAL float FANN_API fann_get_sarprop_weight_decay_shift(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_sarprop_weight_decay_shift(struct fann *ann);
 
 /* Method: fann_set_sarprop_weight_decay_shift
 
@@ -1353,7 +1353,7 @@ FANN_EXTERNAL float FANN_API fann_get_sarprop_weight_decay_shift(struct fann *an
    See also:
    <fann_set_sarprop_weight_decay_shift>
    */ 
-FANN_EXTERNAL void FANN_API fann_set_sarprop_weight_decay_shift(struct fann *ann, float sarprop_weight_decay_shift);
+FANN_EXTERNAL void FANN_API fann_set_sarprop_weight_decay_shift(struct fann *ann, double sarprop_weight_decay_shift);
 
 /* Method: fann_get_sarprop_step_error_threshold_factor
 
@@ -1366,7 +1366,7 @@ FANN_EXTERNAL void FANN_API fann_set_sarprop_weight_decay_shift(struct fann *ann
 
    This function appears in FANN >= 2.1.0.
    */ 
-FANN_EXTERNAL float FANN_API fann_get_sarprop_step_error_threshold_factor(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_sarprop_step_error_threshold_factor(struct fann *ann);
 
 /* Method: fann_set_sarprop_step_error_threshold_factor
 
@@ -1377,7 +1377,7 @@ FANN_EXTERNAL float FANN_API fann_get_sarprop_step_error_threshold_factor(struct
    See also:
    <fann_get_sarprop_step_error_threshold_factor>
    */ 
-FANN_EXTERNAL void FANN_API fann_set_sarprop_step_error_threshold_factor(struct fann *ann, float sarprop_step_error_threshold_factor);
+FANN_EXTERNAL void FANN_API fann_set_sarprop_step_error_threshold_factor(struct fann *ann, double sarprop_step_error_threshold_factor);
 
 /* Method: fann_get_sarprop_step_error_shift
 
@@ -1390,7 +1390,7 @@ FANN_EXTERNAL void FANN_API fann_set_sarprop_step_error_threshold_factor(struct 
 
    This function appears in FANN >= 2.1.0.
    */ 
-FANN_EXTERNAL float FANN_API fann_get_sarprop_step_error_shift(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_sarprop_step_error_shift(struct fann *ann);
 
 /* Method: fann_set_sarprop_step_error_shift
 
@@ -1401,7 +1401,7 @@ FANN_EXTERNAL float FANN_API fann_get_sarprop_step_error_shift(struct fann *ann)
    See also:
    <fann_get_sarprop_step_error_shift>
    */ 
-FANN_EXTERNAL void FANN_API fann_set_sarprop_step_error_shift(struct fann *ann, float sarprop_step_error_shift);
+FANN_EXTERNAL void FANN_API fann_set_sarprop_step_error_shift(struct fann *ann, double sarprop_step_error_shift);
 
 /* Method: fann_get_sarprop_temperature
 
@@ -1414,7 +1414,7 @@ FANN_EXTERNAL void FANN_API fann_set_sarprop_step_error_shift(struct fann *ann, 
 
    This function appears in FANN >= 2.1.0.
    */ 
-FANN_EXTERNAL float FANN_API fann_get_sarprop_temperature(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_sarprop_temperature(struct fann *ann);
 
 /* Method: fann_set_sarprop_temperature
 
@@ -1425,6 +1425,6 @@ FANN_EXTERNAL float FANN_API fann_get_sarprop_temperature(struct fann *ann);
    See also:
    <fann_get_sarprop_temperature>
    */ 
-FANN_EXTERNAL void FANN_API fann_set_sarprop_temperature(struct fann *ann, float sarprop_temperature);
+FANN_EXTERNAL void FANN_API fann_set_sarprop_temperature(struct fann *ann, double sarprop_temperature);
 
 #endif

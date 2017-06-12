@@ -580,7 +580,7 @@ struct fann *fann_create_from_fd(FILE * conf, const char *configuration_file)
 	fann_skip( #what "_" #where "=" );									\
 	for(i = 0; i < ann->num_##where##put; i++)								\
 	{																		\
-		if(fscanf( conf, "%f ", (float *)&ann->what##_##where[ i ] ) != 1)  \
+		if(fscanf( conf, "%f ", (double *)&ann->what##_##where[ i ] ) != 1)  \
 		{																	\
 			fann_error((struct fann_error *) ann, FANN_E_CANT_READ_CONFIG, #what "_" #where, configuration_file); \
 			fann_destroy(ann); 												\
@@ -671,7 +671,7 @@ struct fann *fann_create_from_fd_1_1(FILE * conf, const char *configuration_file
 	unsigned int decimal_point, multiplier;
 #endif
 	fann_type activation_steepness_hidden, activation_steepness_output;
-	float learning_rate, connection_rate;
+	double learning_rate, connection_rate;
 	struct fann_neuron *first_neuron, *neuron_it, *last_neuron, **connected_neurons;
 	fann_type *weights;
 	struct fann_layer *layer_it;

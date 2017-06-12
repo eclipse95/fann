@@ -70,7 +70,7 @@ FANN_EXTERNAL void FANN_API fann_cascadetrain_on_data(struct fann *ann,
 													  struct fann_train_data *data,
 													  unsigned int max_neurons,
 													  unsigned int neurons_between_reports,
-													  float desired_error);
+													  double desired_error);
 
 /* Function: fann_cascadetrain_on_file
    
@@ -84,7 +84,7 @@ FANN_EXTERNAL void FANN_API fann_cascadetrain_on_data(struct fann *ann,
 FANN_EXTERNAL void FANN_API fann_cascadetrain_on_file(struct fann *ann, const char *filename,
 													  unsigned int max_neurons,
 													  unsigned int neurons_between_reports,
-													  float desired_error);
+													  double desired_error);
 
 /* Group: Parameters */
 													  
@@ -110,7 +110,7 @@ FANN_EXTERNAL void FANN_API fann_cascadetrain_on_file(struct fann *ann, const ch
 
 	This function appears in FANN >= 2.0.0.
  */
-FANN_EXTERNAL float FANN_API fann_get_cascade_output_change_fraction(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_cascade_output_change_fraction(struct fann *ann);
 
 
 /* Function: fann_set_cascade_output_change_fraction
@@ -123,7 +123,7 @@ FANN_EXTERNAL float FANN_API fann_get_cascade_output_change_fraction(struct fann
 	This function appears in FANN >= 2.0.0.
  */
 FANN_EXTERNAL void FANN_API fann_set_cascade_output_change_fraction(struct fann *ann, 
-															 float cascade_output_change_fraction);
+															 double cascade_output_change_fraction);
 
 /* Function: fann_get_cascade_output_stagnation_epochs
 
@@ -177,7 +177,7 @@ FANN_EXTERNAL void FANN_API fann_set_cascade_output_stagnation_epochs(struct fan
 
 	This function appears in FANN >= 2.0.0.
  */
-FANN_EXTERNAL float FANN_API fann_get_cascade_candidate_change_fraction(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_cascade_candidate_change_fraction(struct fann *ann);
 
 
 /* Function: fann_set_cascade_candidate_change_fraction
@@ -190,7 +190,7 @@ FANN_EXTERNAL float FANN_API fann_get_cascade_candidate_change_fraction(struct f
 	This function appears in FANN >= 2.0.0.
  */
 FANN_EXTERNAL void FANN_API fann_set_cascade_candidate_change_fraction(struct fann *ann, 
-															 float cascade_candidate_change_fraction);
+															 double cascade_candidate_change_fraction);
 
 /* Function: fann_get_cascade_candidate_stagnation_epochs
 

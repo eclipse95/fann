@@ -8,7 +8,7 @@
 #include "config.h"
 #include "fann.h"
 
-FANN_EXTERNAL float FANN_API fann_train_epoch_batch_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
+FANN_EXTERNAL double FANN_API fann_train_epoch_batch_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
 {
 	/*vector<struct fann *> ann_vect(threadnumb);*/
 	struct fann** ann_vect= (struct fann**) malloc(threadnumb * sizeof(struct fann*));
@@ -79,7 +79,7 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_batch_parallel(struct fann *ann, s
 }
 
 
-FANN_EXTERNAL float FANN_API fann_train_epoch_irpropm_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
+FANN_EXTERNAL double FANN_API fann_train_epoch_irpropm_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
 {
 	struct fann** ann_vect= (struct fann**) malloc(threadnumb * sizeof(struct fann*));
 	int i=0,j=0;
@@ -127,10 +127,10 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_irpropm_parallel(struct fann *ann,
 
     	fann_type next_step;
 
-    	const float increase_factor = ann->rprop_increase_factor;	//1.2;
-    	const float decrease_factor = ann->rprop_decrease_factor;	//0.5;
-    	const float delta_min = ann->rprop_delta_min;	//0.0;
-    	const float delta_max = ann->rprop_delta_max;	//50.0;
+    	const double increase_factor = ann->rprop_increase_factor;	//1.2;
+    	const double decrease_factor = ann->rprop_decrease_factor;	//0.5;
+    	const double delta_min = ann->rprop_delta_min;	//0.0;
+    	const double delta_max = ann->rprop_delta_max;	//50.0;
 		const unsigned int first_weight=0;
 		const unsigned int past_end=ann->total_connections;
 
@@ -199,7 +199,7 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_irpropm_parallel(struct fann *ann,
 }
 
 
-FANN_EXTERNAL float FANN_API fann_train_epoch_quickprop_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
+FANN_EXTERNAL double FANN_API fann_train_epoch_quickprop_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
 {
 	struct fann** ann_vect= (struct fann**) malloc(threadnumb * sizeof(struct fann*));
 	int i=0,j=0;
@@ -248,10 +248,10 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_quickprop_parallel(struct fann *an
 
     	fann_type w=0.0, next_step;
 
-    	const float epsilon = ann->learning_rate / data->num_data;
-    	const float decay = ann->quickprop_decay;	/*-0.0001;*/
-    	const float mu = ann->quickprop_mu;	/*1.75; */
-    	const float shrink_factor = (float) (mu / (1.0 + mu));
+    	const double epsilon = ann->learning_rate / data->num_data;
+    	const double decay = ann->quickprop_decay;	/*-0.0001;*/
+    	const double mu = ann->quickprop_mu;	/*1.75; */
+    	const double shrink_factor = (double) (mu / (1.0 + mu));
 
 		omp_set_dynamic(0);
 		omp_set_num_threads(threadnumb);
@@ -335,7 +335,7 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_quickprop_parallel(struct fann *an
 }
 
 
-FANN_EXTERNAL float FANN_API fann_train_epoch_sarprop_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
+FANN_EXTERNAL double FANN_API fann_train_epoch_sarprop_parallel(struct fann *ann, struct fann_train_data *data, const unsigned int threadnumb)
 {
 	struct fann** ann_vect= (struct fann**) malloc(threadnumb * sizeof(struct fann*));
 	int i=0,j=0;
@@ -386,16 +386,16 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_sarprop_parallel(struct fann *ann,
     	fann_type next_step;
 
     	/* These should be set from variables */
-    	const float increase_factor = ann->rprop_increase_factor;	/*1.2; */
-    	const float decrease_factor = ann->rprop_decrease_factor;	/*0.5; */
+    	const double increase_factor = ann->rprop_increase_factor;	/*1.2; */
+    	const double decrease_factor = ann->rprop_decrease_factor;	/*0.5; */
     	/* TODO: why is delta_min 0.0 in iRprop? SARPROP uses 1x10^-6 (Braun and Riedmiller, 1993) */
-    	const float delta_min = 0.000001f;
-    	const float delta_max = ann->rprop_delta_max;	/*50.0; */
-    	const float weight_decay_shift = ann->sarprop_weight_decay_shift; /* ld 0.01 = -6.644 */
-    	const float step_error_threshold_factor = ann->sarprop_step_error_threshold_factor; /* 0.1 */
-    	const float step_error_shift = ann->sarprop_step_error_shift; /* ld 3 = 1.585 */
-    	const float T = ann->sarprop_temperature;
-		float MSE, RMSE;
+    	const double delta_min = 0.000001f;
+    	const double delta_max = ann->rprop_delta_max;	/*50.0; */
+    	const double weight_decay_shift = ann->sarprop_weight_decay_shift; /* ld 0.01 = -6.644 */
+    	const double step_error_threshold_factor = ann->sarprop_step_error_threshold_factor; /* 0.1 */
+    	const double step_error_shift = ann->sarprop_step_error_shift; /* ld 3 = 1.585 */
+    	const double T = ann->sarprop_temperature;
+		double MSE, RMSE;
 
 
     	//merge of MSEs
@@ -454,7 +454,7 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_sarprop_parallel(struct fann *ann,
 						#define	RAND_MAX	0x7fffffff
 						#endif
 						if(prev_step < step_error_threshold_factor * MSE)
-							next_step = prev_step * decrease_factor + (float)rand() / RAND_MAX * RMSE * (fann_type)fann_exp2(-T * epoch + step_error_shift);
+							next_step = prev_step * decrease_factor + (double)rand() / RAND_MAX * RMSE * (fann_type)fann_exp2(-T * epoch + step_error_shift);
 						else
 							next_step = fann_max(prev_step * decrease_factor, delta_min);
 
@@ -494,7 +494,7 @@ FANN_EXTERNAL float FANN_API fann_train_epoch_sarprop_parallel(struct fann *ann,
 	return fann_get_MSE(ann);
 }
 
-FANN_EXTERNAL float FANN_API fann_train_epoch_incremental_mod(struct fann *ann, struct fann_train_data *data)
+FANN_EXTERNAL double FANN_API fann_train_epoch_incremental_mod(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 

@@ -208,7 +208,8 @@ FANN_EXTERNAL struct fann *FANN_API fann_create_standard_array(unsigned int num_
 
 	This function appears in FANN >= 2.0.0.
 */
-FANN_EXTERNAL struct fann *FANN_API fann_create_sparse(float connection_rate, 
+FANN_EXTERNAL struct fann *FANN_API fann_create_sparse(double connection_rate,
+ 
 	                                                   unsigned int num_layers, ...);
 
 
@@ -223,7 +224,7 @@ FANN_EXTERNAL struct fann *FANN_API fann_create_sparse(float connection_rate,
 
 	This function appears in FANN >= 2.0.0.
 */
-FANN_EXTERNAL struct fann *FANN_API fann_create_sparse_array(float connection_rate, 
+FANN_EXTERNAL struct fann *FANN_API fann_create_sparse_array(double connection_rate, 
 	                                                         unsigned int num_layers, 
 															 const unsigned int *layers);
 
@@ -423,7 +424,7 @@ FANN_EXTERNAL enum fann_nettype_enum FANN_API fann_get_network_type(struct fann 
 
    This function appears in FANN >= 2.1.0
 */
-FANN_EXTERNAL float FANN_API fann_get_connection_rate(struct fann *ann);
+FANN_EXTERNAL double FANN_API fann_get_connection_rate(struct fann *ann);
 
 /* Function: fann_get_num_layers
 

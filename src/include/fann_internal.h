@@ -101,12 +101,12 @@ fann_type fann_activation(struct fann * ann, unsigned int activation_function, f
 fann_type fann_activation_derived(unsigned int activation_function,
 								  fann_type steepness, fann_type value, fann_type sum);
 
-int fann_desired_error_reached(struct fann *ann, float desired_error);
+int fann_desired_error_reached(struct fann *ann, double desired_error);
 
 /* Some functions for cascade */
-int fann_train_outputs(struct fann *ann, struct fann_train_data *data, float desired_error);
+int fann_train_outputs(struct fann *ann, struct fann_train_data *data, double desired_error);
 
-float fann_train_outputs_epoch(struct fann *ann, struct fann_train_data *data);
+double fann_train_outputs_epoch(struct fann *ann, struct fann_train_data *data);
 
 int fann_train_candidates(struct fann *ann, struct fann_train_data *data);
 
@@ -132,7 +132,7 @@ FANN_EXTERNAL void FANN_API fann_scale_data_to_range(fann_type ** data, unsigned
 #define fann_exp2(x) exp(0.69314718055994530942*(x))
 /*#define fann_clip(x, lo, hi) (x)*/
 
-#define fann_rand(min_value, max_value) (((float)(min_value))+(((float)(max_value)-((float)(min_value)))*rand()/(RAND_MAX+1.0f)))
+#define fann_rand(min_value, max_value) (((double)(min_value))+(((double)(max_value)-((double)(min_value)))*rand()/(RAND_MAX+1.0f)))
 
 #define fann_abs(value) (((value) > 0) ? (value) : -(value))
 

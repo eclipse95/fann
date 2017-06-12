@@ -81,7 +81,7 @@ FANN_EXTERNAL void FANN_API fann_destroy_train(struct fann_train_data *data)
 /*
  * Test a set of training data and calculate the MSE 
  */
-FANN_EXTERNAL float FANN_API fann_test_data(struct fann *ann, struct fann_train_data *data)
+FANN_EXTERNAL double FANN_API fann_test_data(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 	if(fann_check_input_output_sizes(ann, data) == -1)
@@ -102,7 +102,7 @@ FANN_EXTERNAL float FANN_API fann_test_data(struct fann *ann, struct fann_train_
 /*
  * Internal train function 
  */
-float fann_train_epoch_quickprop(struct fann *ann, struct fann_train_data *data)
+double fann_train_epoch_quickprop(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 
@@ -128,7 +128,7 @@ float fann_train_epoch_quickprop(struct fann *ann, struct fann_train_data *data)
 /*
  * Internal train function 
  */
-float fann_train_epoch_irpropm(struct fann *ann, struct fann_train_data *data)
+double fann_train_epoch_irpropm(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 
@@ -152,7 +152,7 @@ float fann_train_epoch_irpropm(struct fann *ann, struct fann_train_data *data)
 	return fann_get_MSE(ann);
 }
 
-float fann_train_epoch_irpropm_gradient(struct fann *ann, struct fann_train_data *data, fann_type (*errorFunction)(fann_type*,fann_type*,int,void*), void* errorFuncdata)
+double fann_train_epoch_irpropm_gradient(struct fann *ann, struct fann_train_data *data, fann_type (*errorFunction)(fann_type*,fann_type*,int,void*), void* errorFuncdata)
 {
 	unsigned int i;
 
@@ -178,7 +178,7 @@ float fann_train_epoch_irpropm_gradient(struct fann *ann, struct fann_train_data
 
 
 
-float fann_train_epoch_irpropm_lw(struct fann *ann, struct fann_train_data *data, fann_type* label_weight)
+double fann_train_epoch_irpropm_lw(struct fann *ann, struct fann_train_data *data, fann_type* label_weight)
 {
 	unsigned int i;
 
@@ -207,7 +207,7 @@ float fann_train_epoch_irpropm_lw(struct fann *ann, struct fann_train_data *data
 /*
  * Internal train function 
  */
-float fann_train_epoch_sarprop(struct fann *ann, struct fann_train_data *data)
+double fann_train_epoch_sarprop(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 
@@ -236,7 +236,7 @@ float fann_train_epoch_sarprop(struct fann *ann, struct fann_train_data *data)
 /*
  * Internal train function 
  */
-float fann_train_epoch_batch(struct fann *ann, struct fann_train_data *data)
+double fann_train_epoch_batch(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 
@@ -258,7 +258,7 @@ float fann_train_epoch_batch(struct fann *ann, struct fann_train_data *data)
 /*
  * Internal train function 
  */
-float fann_train_epoch_incremental(struct fann *ann, struct fann_train_data *data)
+double fann_train_epoch_incremental(struct fann *ann, struct fann_train_data *data)
 {
 	unsigned int i;
 
@@ -275,7 +275,7 @@ float fann_train_epoch_incremental(struct fann *ann, struct fann_train_data *dat
 /*
  * Train for one epoch with the selected training algorithm 
  */
-FANN_EXTERNAL float FANN_API fann_train_epoch(struct fann *ann, struct fann_train_data *data)
+FANN_EXTERNAL double FANN_API fann_train_epoch(struct fann *ann, struct fann_train_data *data)
 {
 	if(fann_check_input_output_sizes(ann, data) == -1)
 		return 0;
@@ -296,7 +296,7 @@ FANN_EXTERNAL float FANN_API fann_train_epoch(struct fann *ann, struct fann_trai
 	return 0;
 }
 
-FANN_EXTERNAL float FANN_API fann_train_epoch_lw(struct fann *ann, struct fann_train_data *data, 
+FANN_EXTERNAL double FANN_API fann_train_epoch_lw(struct fann *ann, struct fann_train_data *data, 
 fann_type* label_weight)
 {
 	if(fann_check_input_output_sizes(ann, data) == -1)
@@ -317,9 +317,9 @@ fann_type* label_weight)
 FANN_EXTERNAL void FANN_API fann_train_on_data(struct fann *ann, struct fann_train_data *data,
 											   unsigned int max_epochs,
 											   unsigned int epochs_between_reports,
-											   float desired_error)
+											   double desired_error)
 {
-	float error;
+	double error;
 	unsigned int i;
 	int desired_error_reached;
 
@@ -370,7 +370,7 @@ FANN_EXTERNAL void FANN_API fann_train_on_data(struct fann *ann, struct fann_tra
 FANN_EXTERNAL void FANN_API fann_train_on_file(struct fann *ann, const char *filename,
 											   unsigned int max_epochs,
 											   unsigned int epochs_between_reports,
-											   float desired_error)
+											   double desired_error)
 {
 	struct fann_train_data *data = fann_read_train_from_file(filename);
 
@@ -1067,7 +1067,7 @@ struct fann_train_data *fann_read_train_from_fd(FILE * file, const char *filenam
 /*
  * INTERNAL FUNCTION returns 0 if the desired error is reached and -1 if it is not reached
  */
-int fann_desired_error_reached(struct fann *ann, float desired_error)
+int fann_desired_error_reached(struct fann *ann, double desired_error)
 {
 	switch (ann->train_stop_function)
 	{
@@ -1236,9 +1236,9 @@ FANN_EXTERNAL void FANN_API fann_descale_train( struct fann *ann, struct fann_tr
 		ann->scale_mean_##where[ cur_neuron ] = 0.0f;													\
 	for( cur_neuron = 0; cur_neuron < ann->num_##where##put; cur_neuron++ )								\
 		for( cur_sample = 0; cur_sample < data->num_data; cur_sample++ )								\
-			ann->scale_mean_##where[ cur_neuron ] += (float)data->where##put[ cur_sample ][ cur_neuron ];\
+			ann->scale_mean_##where[ cur_neuron ] += (double)data->where##put[ cur_sample ][ cur_neuron ];\
 	for( cur_neuron = 0; cur_neuron < ann->num_##where##put; cur_neuron++ )								\
-		ann->scale_mean_##where[ cur_neuron ] /= (float)data->num_data;									\
+		ann->scale_mean_##where[ cur_neuron ] /= (double)data->num_data;									\
 	/* Calculate deviation: sqrt(sum((x-mean)^2)/length) */												\
 	for( cur_neuron = 0; cur_neuron < ann->num_##where##put; cur_neuron++ )								\
 		ann->scale_deviation_##where[ cur_neuron ] = 0.0f; 												\
@@ -1247,17 +1247,17 @@ FANN_EXTERNAL void FANN_API fann_descale_train( struct fann *ann, struct fann_tr
 			ann->scale_deviation_##where[ cur_neuron ] += 												\
 				/* Another local variable in macro? Oh no! */											\
 				( 																						\
-					(float)data->where##put[ cur_sample ][ cur_neuron ] 								\
+					(double)data->where##put[ cur_sample ][ cur_neuron ] 								\
 					- ann->scale_mean_##where[ cur_neuron ] 											\
 				) 																						\
 				*																						\
 				( 																						\
-					(float)data->where##put[ cur_sample ][ cur_neuron ] 								\
+					(double)data->where##put[ cur_sample ][ cur_neuron ] 								\
 					- ann->scale_mean_##where[ cur_neuron ] 											\
 				); 																						\
 	for( cur_neuron = 0; cur_neuron < ann->num_##where##put; cur_neuron++ )								\
 		ann->scale_deviation_##where[ cur_neuron ] =													\
-			sqrtf( ann->scale_deviation_##where[ cur_neuron ] / (float)data->num_data ); 			\
+			sqrtf( ann->scale_deviation_##where[ cur_neuron ] / (double)data->num_data ); 			\
 	/* Calculate factor: (new_max-new_min)/(old_max(1)-old_min(-1)) */									\
 	/* Looks like we dont need whole array of factors? */												\
 	for( cur_neuron = 0; cur_neuron < ann->num_##where##put; cur_neuron++ )								\
@@ -1273,8 +1273,8 @@ FANN_EXTERNAL void FANN_API fann_descale_train( struct fann *ann, struct fann_tr
 FANN_EXTERNAL int FANN_API fann_set_input_scaling_params(
 	struct fann *ann,
 	const struct fann_train_data *data,
-	float new_input_min,
-	float new_input_max)
+	double new_input_min,
+	double new_input_max)
 {
 	unsigned cur_neuron, cur_sample;
 
@@ -1311,8 +1311,8 @@ FANN_EXTERNAL int FANN_API fann_set_input_scaling_params(
 FANN_EXTERNAL int FANN_API fann_set_output_scaling_params(
 	struct fann *ann,
 	const struct fann_train_data *data,
-	float new_output_min,
-	float new_output_max)
+	double new_output_min,
+	double new_output_max)
 {
 	unsigned cur_neuron, cur_sample;
 
@@ -1352,10 +1352,10 @@ FANN_EXTERNAL int FANN_API fann_set_output_scaling_params(
 FANN_EXTERNAL int FANN_API fann_set_scaling_params(
 	struct fann *ann,
 	const struct fann_train_data *data,
-	float new_input_min,
-	float new_input_max,
-	float new_output_min,
-	float new_output_max)
+	double new_input_min,
+	double new_input_max,
+	double new_output_min,
+	double new_output_max)
 {
 	if(fann_set_input_scaling_params(ann, data, new_input_min, new_input_max) == 0)
 		return fann_set_output_scaling_params(ann, data, new_output_min, new_output_max);

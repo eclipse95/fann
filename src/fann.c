@@ -76,7 +76,7 @@ FANN_EXTERNAL struct fann *FANN_API fann_create_standard_array(unsigned int num_
 	return fann_create_sparse_array(1, num_layers, layers);	
 }
 
-FANN_EXTERNAL struct fann *FANN_API fann_create_sparse(float connection_rate, 
+FANN_EXTERNAL struct fann *FANN_API fann_create_sparse(double connection_rate,
 													   unsigned int num_layers, ...)
 {
 	struct fann *ann;
@@ -116,7 +116,7 @@ FANN_EXTERNAL struct fann *FANN_API fann_create_sparse(float connection_rate,
 	return ann;
 }
 
-FANN_EXTERNAL struct fann *FANN_API fann_create_sparse_array(float connection_rate,
+FANN_EXTERNAL struct fann *FANN_API fann_create_sparse_array(double connection_rate,
 															 unsigned int num_layers,
 															 const unsigned int *layers)
 {
@@ -1182,7 +1182,7 @@ FANN_EXTERNAL void FANN_API fann_init_weights(struct fann *ann, struct fann_trai
 #ifdef FIXEDFANN
 	unsigned int multiplier = ann->multiplier;
 #endif
-	float scale_factor;
+	double scale_factor;
 
 	for(smallest_inp = largest_inp = train_data->input[0][0]; dat < train_data->num_data; dat++)
 	{
@@ -1199,7 +1199,7 @@ FANN_EXTERNAL void FANN_API fann_init_weights(struct fann *ann, struct fann_trai
 		ann->total_neurons - (ann->num_input + ann->num_output +
 							  (ann->last_layer - ann->first_layer)));
 	scale_factor =
-		(float) (pow
+		(double) (pow
 				 ((double) (0.7f * (double) num_hidden_neurons),
 				  (double) (1.0f / (double) ann->num_input)) / (double) (largest_inp -
 																		 smallest_inp));
@@ -1347,7 +1347,7 @@ FANN_EXTERNAL enum fann_nettype_enum FANN_API fann_get_network_type(struct fann 
     return ann->network_type;
 }
 
-FANN_EXTERNAL float FANN_API fann_get_connection_rate(struct fann *ann)
+FANN_EXTERNAL double FANN_API fann_get_connection_rate(struct fann *ann)
 {
     return ann->connection_rate;
 }
@@ -1619,15 +1619,15 @@ void fann_update_stepwise(struct fann *ann)
 	for(i = 0; i < 6; i++)
 	{
 		ann->sigmoid_values[i] =
-			(fann_type) (((log(ann->multiplier / (float) ann->sigmoid_results[i] - 1) *
-						   (float) ann->multiplier) / -2.0) * (float) ann->multiplier);
+			(fann_type) (((log(ann->multiplier / (double) ann->sigmoid_results[i] - 1) *
+						   (double) ann->multiplier) / -2.0) * (double) ann->multiplier);
 		ann->sigmoid_symmetric_values[i] =
 			(fann_type) (((log
 						   ((ann->multiplier -
-							 (float) ann->sigmoid_symmetric_results[i]) /
-							((float) ann->sigmoid_symmetric_results[i] +
-							 ann->multiplier)) * (float) ann->multiplier) / -2.0) *
-						 (float) ann->multiplier);
+							 (double) ann->sigmoid_symmetric_results[i]) /
+							((double) ann->sigmoid_symmetric_results[i] +
+							 ann->multiplier)) * (double) ann->multiplier) / -2.0) *
+						 (double) ann->multiplier);
 	}
 }
 #endif
@@ -1797,9 +1797,9 @@ int fann_allocate_scale(struct fann *ann)
 #ifndef FIXEDFANN
 	unsigned int i = 0;
 #define SCALE_ALLOCATE( what, where, default_value )		    			\
-		ann->what##_##where = (float *)calloc(								\
+		ann->what##_##where = (double *)calloc(								\
 			ann->num_##where##put,											\
-			sizeof( float )													\
+			sizeof( double )													\
 			);																\
 		if( ann->what##_##where == NULL )									\
 		{																	\

@@ -197,7 +197,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.3.0.
         */
-        neural_net(float connection_rate, unsigned int num_layers, ...) {
+        neural_net(double connection_rate, unsigned int num_layers, ...) {
             std::unique_ptr<unsigned int[]> data(new unsigned int[num_layers]);
 
             va_list layers;
@@ -225,7 +225,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.3.0.
         */
-        neural_net(float connection_rate, unsigned int num_layers, const unsigned int *layers) {
+        neural_net(double connection_rate, unsigned int num_layers, const unsigned int *layers) {
             ann = fann_create_sparse_array(connection_rate, num_layers, layers);
             assert(ann != NULL);
         }
@@ -417,7 +417,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.0.0.
         */
-        bool create_sparse(float connection_rate, unsigned int num_layers, ...) {
+        bool create_sparse(double connection_rate, unsigned int num_layers, ...) {
             std::unique_ptr<unsigned int[]> data(new unsigned int[num_layers]);
 
             va_list layers;
@@ -447,7 +447,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.0.0.
         */
-        bool create_sparse_array(float connection_rate,
+        bool create_sparse_array(double connection_rate,
                                  unsigned int num_layers, const unsigned int *layers) {
             destroy();
             ann = fann_create_sparse_array(connection_rate, num_layers, layers);
@@ -734,8 +734,8 @@ namespace FANN {
         		
 	        This function appears in FANN >= 1.2.0.
          */
-        float train_epoch(const training_data &data) {
-            float mse = 0.0f;
+        double train_epoch(const training_data &data) {
+            double mse = 0.0f;
             if ((ann != NULL) && (data.train_data != NULL)) {
                 mse = fann_train_epoch(ann, data.train_data);
             }
@@ -767,7 +767,7 @@ namespace FANN {
 	        This function appears in FANN >= 1.0.0.
         */
         void train_on_data(const training_data &data, unsigned int max_epochs,
-                           unsigned int epochs_between_reports, float desired_error) {
+                           unsigned int epochs_between_reports, double desired_error) {
             if ((ann != NULL) && (data.train_data != NULL)) {
                 fann_train_on_data(ann, data.train_data, max_epochs,
                                    epochs_between_reports, desired_error);
@@ -784,7 +784,7 @@ namespace FANN {
 	        This function appears in FANN >= 1.0.0.
         */
         void train_on_file(const std::string &filename, unsigned int max_epochs,
-                           unsigned int epochs_between_reports, float desired_error) {
+                           unsigned int epochs_between_reports, double desired_error) {
             if (ann != NULL) {
                 fann_train_on_file(ann, filename.c_str(),
                                    max_epochs, epochs_between_reports, desired_error);
@@ -823,8 +823,8 @@ namespace FANN {
 
 	        This function appears in FANN >= 1.2.0.
          */
-        float test_data(const training_data &data) {
-            float mse = 0.0f;
+        double test_data(const training_data &data) {
+            double mse = 0.0f;
             if ((ann != NULL) && (data.train_data != NULL)) {
                 mse = fann_test_data(ann, data.train_data);
             }
@@ -843,8 +843,8 @@ namespace FANN {
 
 	        This function appears in FANN >= 1.1.0.
          */
-        float get_MSE() {
-            float mse = 0.0f;
+        double get_MSE() {
+            double mse = 0.0f;
             if (ann != NULL) {
                 mse = fann_get_MSE(ann);
             }
@@ -974,8 +974,8 @@ namespace FANN {
            
            This function appears in FANN >= 1.0.0.   	
          */
-        float get_learning_rate() {
-            float learning_rate = 0.0f;
+        double get_learning_rate() {
+            double learning_rate = 0.0f;
             if (ann != NULL) {
                 learning_rate = fann_get_learning_rate(ann);
             }
@@ -990,7 +990,7 @@ namespace FANN {
 
            This function appears in FANN >= 1.0.0.   	
          */
-        void set_learning_rate(float learning_rate) {
+        void set_learning_rate(double learning_rate) {
             if (ann != NULL) {
                 fann_set_learning_rate(ann, learning_rate);
             }
@@ -1282,8 +1282,8 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
          */
-        float get_quickprop_decay() {
-            float quickprop_decay = 0.0f;
+        double get_quickprop_decay() {
+            double quickprop_decay = 0.0f;
             if (ann != NULL) {
                 quickprop_decay = fann_get_quickprop_decay(ann);
             }
@@ -1299,7 +1299,7 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        void set_quickprop_decay(float quickprop_decay) {
+        void set_quickprop_decay(double quickprop_decay) {
             if (ann != NULL) {
                 fann_set_quickprop_decay(ann, quickprop_decay);
             }
@@ -1318,8 +1318,8 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        float get_quickprop_mu() {
-            float quickprop_mu = 0.0f;
+        double get_quickprop_mu() {
+            double quickprop_mu = 0.0f;
             if (ann != NULL) {
                 quickprop_mu = fann_get_quickprop_mu(ann);
             }
@@ -1335,7 +1335,7 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        void set_quickprop_mu(float quickprop_mu) {
+        void set_quickprop_mu(double quickprop_mu) {
             if (ann != NULL) {
                 fann_set_quickprop_mu(ann, quickprop_mu);
             }
@@ -1353,8 +1353,8 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        float get_rprop_increase_factor() {
-            float factor = 0.0f;
+        double get_rprop_increase_factor() {
+            double factor = 0.0f;
             if (ann != NULL) {
                 factor = fann_get_rprop_increase_factor(ann);
             }
@@ -1370,7 +1370,7 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        void set_rprop_increase_factor(float rprop_increase_factor) {
+        void set_rprop_increase_factor(double rprop_increase_factor) {
             if (ann != NULL) {
                 fann_set_rprop_increase_factor(ann, rprop_increase_factor);
             }
@@ -1387,8 +1387,8 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        float get_rprop_decrease_factor() {
-            float factor = 0.0f;
+        double get_rprop_decrease_factor() {
+            double factor = 0.0f;
             if (ann != NULL) {
                 factor = fann_get_rprop_decrease_factor(ann);
             }
@@ -1404,7 +1404,7 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        void set_rprop_decrease_factor(float rprop_decrease_factor) {
+        void set_rprop_decrease_factor(double rprop_decrease_factor) {
             if (ann != NULL) {
                 fann_set_rprop_decrease_factor(ann, rprop_decrease_factor);
             }
@@ -1421,8 +1421,8 @@ namespace FANN {
            	
            This function appears in FANN >= 2.1.0.
         */
-        float get_rprop_delta_zero() {
-            float delta = 0.0f;
+        double get_rprop_delta_zero() {
+            double delta = 0.0f;
             if (ann != NULL) {
                 delta = fann_get_rprop_delta_zero(ann);
             }
@@ -1438,7 +1438,7 @@ namespace FANN {
            	
            This function appears in FANN >= 2.1.0.
         */
-        void set_rprop_delta_zero(float rprop_delta_zero) {
+        void set_rprop_delta_zero(double rprop_delta_zero) {
             if (ann != NULL) {
                 fann_set_rprop_delta_zero(ann, rprop_delta_zero);
             }
@@ -1455,8 +1455,8 @@ namespace FANN {
            	
            This function appears in FANN >= 1.2.0.
         */
-        float get_rprop_delta_min() {
-            float delta = 0.0f;
+        double get_rprop_delta_min() {
+            double delta = 0.0f;
             if (ann != NULL) {
                 delta = fann_get_rprop_delta_min(ann);
             }
@@ -1472,7 +1472,7 @@ namespace FANN {
            	
            This function appears in FANN >= 1.2.0.
         */
-        void set_rprop_delta_min(float rprop_delta_min) {
+        void set_rprop_delta_min(double rprop_delta_min) {
             if (ann != NULL) {
                 fann_set_rprop_delta_min(ann, rprop_delta_min);
             }
@@ -1489,8 +1489,8 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        float get_rprop_delta_max() {
-            float delta = 0.0f;
+        double get_rprop_delta_max() {
+            double delta = 0.0f;
             if (ann != NULL) {
                 delta = fann_get_rprop_delta_max(ann);
             }
@@ -1506,7 +1506,7 @@ namespace FANN {
 
            This function appears in FANN >= 1.2.0.
         */
-        void set_rprop_delta_max(float rprop_delta_max) {
+        void set_rprop_delta_max(double rprop_delta_max) {
             if (ann != NULL) {
                 fann_set_rprop_delta_max(ann, rprop_delta_max);
             }
@@ -1523,8 +1523,8 @@ namespace FANN {
 
            This function appears in FANN >= 2.1.0.
         */
-        float get_sarprop_weight_decay_shift() {
-            float res = 0.0f;
+        double get_sarprop_weight_decay_shift() {
+            double res = 0.0f;
             if (ann != NULL) {
                 res = fann_get_rprop_delta_max(ann);
             }
@@ -1540,7 +1540,7 @@ namespace FANN {
 	    See also:
    	        <get_sarprop_weight_decay_shift>, <fann_set_sarprop_weight_decay_shift>
         */
-        void set_sarprop_weight_decay_shift(float sarprop_weight_decay_shift) {
+        void set_sarprop_weight_decay_shift(double sarprop_weight_decay_shift) {
             if (ann != NULL) {
                 fann_set_sarprop_weight_decay_shift(ann, sarprop_weight_decay_shift);
             }
@@ -1557,8 +1557,8 @@ namespace FANN {
 
            This function appears in FANN >= 2.1.0.
         */
-        float get_sarprop_step_error_threshold_factor() {
-            float res = 0.0f;
+        double get_sarprop_step_error_threshold_factor() {
+            double res = 0.0f;
             if (ann != NULL) {
                 res = fann_get_rprop_delta_max(ann);
             }
@@ -1574,7 +1574,7 @@ namespace FANN {
 	    See also:
    	        <get_sarprop_step_error_threshold_factor>, <fann_set_sarprop_step_error_threshold_factor>
         */
-        void set_sarprop_step_error_threshold_factor(float sarprop_step_error_threshold_factor) {
+        void set_sarprop_step_error_threshold_factor(double sarprop_step_error_threshold_factor) {
             if (ann != NULL) {
                 fann_set_sarprop_step_error_threshold_factor(ann, sarprop_step_error_threshold_factor);
             }
@@ -1591,8 +1591,8 @@ namespace FANN {
 
            This function appears in FANN >= 2.1.0.
         */
-        float get_sarprop_step_error_shift() {
-            float res = 0.0f;
+        double get_sarprop_step_error_shift() {
+            double res = 0.0f;
             if (ann != NULL) {
                 res = fann_get_rprop_delta_max(ann);
             }
@@ -1608,7 +1608,7 @@ namespace FANN {
 	    See also:
    	        <get_sarprop_step_error_shift>, <fann_set_sarprop_step_error_shift>
         */
-        void set_sarprop_step_error_shift(float sarprop_step_error_shift) {
+        void set_sarprop_step_error_shift(double sarprop_step_error_shift) {
             if (ann != NULL) {
                 fann_set_sarprop_step_error_shift(ann, sarprop_step_error_shift);
             }
@@ -1625,8 +1625,8 @@ namespace FANN {
 
                This function appears in FANN >= 2.1.0.
             */
-        float get_sarprop_temperature() {
-            float res = 0.0f;
+        double get_sarprop_temperature() {
+            double res = 0.0f;
             if (ann != NULL) {
                 res = fann_get_rprop_delta_max(ann);
             }
@@ -1642,7 +1642,7 @@ namespace FANN {
 	    See also:
    	        <get_sarprop_temperature>, <fann_set_sarprop_temperature>
         */
-        void set_sarprop_temperature(float sarprop_temperature) {
+        void set_sarprop_temperature(double sarprop_temperature) {
             if (ann != NULL) {
                 fann_set_sarprop_temperature(ann, sarprop_temperature);
             }
@@ -1790,7 +1790,7 @@ namespace FANN {
 
            This function appears in FANN >= 2.1.0
         */
-        float get_connection_rate() {
+        double get_connection_rate() {
             if (ann == NULL) {
                 return 0;
             }
@@ -1928,8 +1928,8 @@ namespace FANN {
 
            This function appears in FANN >= 2.0.0.   	
          */
-        float get_learning_momentum() {
-            float learning_momentum = 0.0f;
+        double get_learning_momentum() {
+            double learning_momentum = 0.0f;
             if (ann != NULL) {
                 learning_momentum = fann_get_learning_momentum(ann);
             }
@@ -1944,15 +1944,15 @@ namespace FANN {
 
            This function appears in FANN >= 2.0.0.   	
          */
-        void set_learning_momentum(float learning_momentum) {
+        void set_learning_momentum(double learning_momentum) {
             if (ann != NULL) {
                 fann_set_learning_momentum(ann, learning_momentum);
             }
         }
 
-	float get_learning_l2_norm()
+	double get_learning_l2_norm()
 	{
-	        float learning_l2_norm = 0.0f;
+	        double learning_l2_norm = 0.0f;
 	        if (ann != NULL)
 	        {
 	        	learning_l2_norm = fann_get_learning_l2_norm(ann);
@@ -1960,7 +1960,7 @@ namespace FANN {
 		return learning_l2_norm;
 	}
 
-	void set_learning_l2_norm(float learning_l2_norm)
+	void set_learning_l2_norm(double learning_l2_norm)
 	{
 		if (ann != NULL)
 		{
@@ -2104,7 +2104,7 @@ namespace FANN {
 	        This function appears in FANN >= 2.0.0. 
         */
         void cascadetrain_on_data(const training_data &data, unsigned int max_neurons,
-                                  unsigned int neurons_between_reports, float desired_error) {
+                                  unsigned int neurons_between_reports, double desired_error) {
             if ((ann != NULL) && (data.train_data != NULL)) {
                 fann_cascadetrain_on_data(ann, data.train_data, max_neurons,
                                           neurons_between_reports, desired_error);
@@ -2121,7 +2121,7 @@ namespace FANN {
 	        This function appears in FANN >= 2.0.0.
         */
         void cascadetrain_on_file(const std::string &filename, unsigned int max_neurons,
-                                  unsigned int neurons_between_reports, float desired_error) {
+                                  unsigned int neurons_between_reports, double desired_error) {
             if (ann != NULL) {
                 fann_cascadetrain_on_file(ann, filename.c_str(),
                                           max_neurons, neurons_between_reports, desired_error);
@@ -2151,8 +2151,8 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.0.0.
          */
-        float get_cascade_output_change_fraction() {
-            float change_fraction = 0.0f;
+        double get_cascade_output_change_fraction() {
+            double change_fraction = 0.0f;
             if (ann != NULL) {
                 change_fraction = fann_get_cascade_output_change_fraction(ann);
             }
@@ -2168,7 +2168,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.0.0.
          */
-        void set_cascade_output_change_fraction(float cascade_output_change_fraction) {
+        void set_cascade_output_change_fraction(double cascade_output_change_fraction) {
             if (ann != NULL) {
                 fann_set_cascade_output_change_fraction(ann, cascade_output_change_fraction);
             }
@@ -2235,8 +2235,8 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.0.0.
          */
-        float get_cascade_candidate_change_fraction() {
-            float change_fraction = 0.0f;
+        double get_cascade_candidate_change_fraction() {
+            double change_fraction = 0.0f;
             if (ann != NULL) {
                 change_fraction = fann_get_cascade_candidate_change_fraction(ann);
             }
@@ -2253,7 +2253,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.0.0.
          */
-        void set_cascade_candidate_change_fraction(float cascade_candidate_change_fraction) {
+        void set_cascade_candidate_change_fraction(double cascade_candidate_change_fraction) {
             if (ann != NULL) {
                 fann_set_cascade_candidate_change_fraction(ann, cascade_candidate_change_fraction);
             }
@@ -2687,7 +2687,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.1.0.
          */
-        bool set_input_scaling_params(const training_data &data, float new_input_min, float new_input_max) {
+        bool set_input_scaling_params(const training_data &data, double new_input_min, double new_input_max) {
             bool status = false;
             if (ann != NULL) {
                 status = (fann_set_input_scaling_params(ann, data.train_data, new_input_min, new_input_max) != -1);
@@ -2704,7 +2704,7 @@ namespace FANN {
 
 	        This function appears in FANN >= 2.1.0.
          */
-        bool set_output_scaling_params(const training_data &data, float new_output_min, float new_output_max) {
+        bool set_output_scaling_params(const training_data &data, double new_output_min, double new_output_max) {
             bool status = false;
             if (ann != NULL) {
                 status = (fann_set_output_scaling_params(ann, data.train_data, new_output_min, new_output_max) != -1);
@@ -2722,7 +2722,7 @@ namespace FANN {
 	        This function appears in FANN >= 2.1.0.
          */
         bool set_scaling_params(const training_data &data,
-                                float new_input_min, float new_input_max, float new_output_min, float new_output_max) {
+                                double new_input_min, double new_input_max, double new_output_min, double new_output_max) {
             bool status = false;
             if (ann != NULL) {
                 status = (fann_set_scaling_params(ann, data.train_data,
@@ -2932,7 +2932,7 @@ namespace FANN {
         // Internal callback used to convert from pointers to class references
         static int FANN_API internal_callback(struct fann *ann, struct fann_train_data *train,
                                               unsigned int max_epochs, unsigned int epochs_between_reports,
-                                              float desired_error, unsigned int epochs) {
+                                              double desired_error, unsigned int epochs) {
             user_context *user_data = static_cast<user_context *>(fann_get_user_data(ann));
             if (user_data != NULL) {
                 FANN::training_data data;

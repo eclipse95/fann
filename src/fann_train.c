@@ -115,7 +115,7 @@ FANN_EXTERNAL void FANN_API fann_train(struct fann *ann, fann_type * input,
 */
 fann_type fann_update_MSE(struct fann *ann, struct fann_neuron* neuron, fann_type neuron_diff)
 {
-	float neuron_diff2;
+	double neuron_diff2;
 	
 	switch (neuron->activation_function)
 	{
@@ -146,9 +146,9 @@ fann_type fann_update_MSE(struct fann *ann, struct fann_neuron* neuron, fann_typ
 
 #ifdef FIXEDFANN
 		neuron_diff2 =
-			(neuron_diff / (float) ann->multiplier) * (neuron_diff / (float) ann->multiplier);
+			(neuron_diff / (double) ann->multiplier) * (neuron_diff / (double) ann->multiplier);
 #else
-		neuron_diff2 = (float) (neuron_diff * neuron_diff);
+		neuron_diff2 = (double) (neuron_diff * neuron_diff);
 #endif
 
 	ann->MSE_value += neuron_diff2;
@@ -164,7 +164,7 @@ fann_type fann_update_MSE(struct fann *ann, struct fann_neuron* neuron, fann_typ
 
 fann_type fann_update_MSE_lw(struct fann *ann, struct fann_neuron* neuron, fann_type neuron_diff, fann_type label_weight)
 {
-	float neuron_diff2;
+	double neuron_diff2;
 	
 	switch (neuron->activation_function)
 	{
@@ -193,9 +193,9 @@ fann_type fann_update_MSE_lw(struct fann *ann, struct fann_neuron* neuron, fann_
 
 #ifdef FIXEDFANN
 		neuron_diff2 =
-			(neuron_diff / (float) ann->multiplier) * (neuron_diff / (float) ann->multiplier);
+			(neuron_diff / (double) ann->multiplier) * (neuron_diff / (double) ann->multiplier);
 #else
-		neuron_diff2 = (float) (neuron_diff * neuron_diff);
+		neuron_diff2 = (double) (neuron_diff * neuron_diff);
 #endif
 
 	ann->MSE_value += neuron_diff2 * label_weight;
@@ -243,11 +243,11 @@ FANN_EXTERNAL fann_type *FANN_API fann_test(struct fann *ann, fann_type * input,
 
 /* get the mean square error.
  */
-FANN_EXTERNAL float FANN_API fann_get_MSE(struct fann *ann)
+FANN_EXTERNAL double FANN_API fann_get_MSE(struct fann *ann)
 {
 	if(ann->num_MSE)
 	{
-		return ann->MSE_value / (float) ann->num_MSE;
+		return ann->MSE_value / (double) ann->num_MSE;
 	}
 	else
 	{
@@ -631,8 +631,8 @@ void fann_update_weights(struct fann *ann)
 	unsigned int num_connections;
 
 	/* store some variabels local for fast access */
-	const float learning_rate = ann->learning_rate;
-    const float learning_momentum = ann->learning_momentum;        
+	const double learning_rate = ann->learning_rate;
+    const double learning_momentum = ann->learning_momentum;        
 	struct fann_neuron *first_neuron = ann->first_layer->first_neuron;
 	struct fann_layer *first_layer = ann->first_layer;
 	const struct fann_layer *last_layer = ann->last_layer;
@@ -864,7 +864,7 @@ void fann_update_weights_batch(struct fann *ann, unsigned int num_data, unsigned
 {
 	fann_type *train_slopes = ann->train_slopes;
 	fann_type *weights = ann->weights;
-	const float epsilon = ann->learning_rate / num_data;
+	const double epsilon = ann->learning_rate / num_data;
 	unsigned int i = first_weight;
 
 	for(; i != past_end; i++)
@@ -887,10 +887,10 @@ void fann_update_weights_quickprop(struct fann *ann, unsigned int num_data,
 
 	fann_type w, prev_step, slope, prev_slope, next_step;
 
-	float epsilon = ann->learning_rate / num_data;
-	float decay = ann->quickprop_decay;	/*-0.0001;*/
-	float mu = ann->quickprop_mu;	/*1.75; */
-	float shrink_factor = (float) (mu / (1.0 + mu));
+	double epsilon = ann->learning_rate / num_data;
+	double decay = ann->quickprop_decay;	/*-0.0001;*/
+	double mu = ann->quickprop_mu;	/*1.75; */
+	double shrink_factor = (double) (mu / (1.0 + mu));
 	
 	unsigned int i = first_weight;
 
@@ -974,10 +974,10 @@ void fann_update_weights_irpropm(struct fann *ann, unsigned int first_weight, un
 
 	fann_type prev_step, slope, prev_slope, next_step, same_sign;
 
-	float increase_factor = ann->rprop_increase_factor;	/*1.2; */
-	float decrease_factor = ann->rprop_decrease_factor;	/*0.5; */
-	float delta_min = ann->rprop_delta_min;	/*0.0; */
-	float delta_max = ann->rprop_delta_max;	/*50.0; */
+	double increase_factor = ann->rprop_increase_factor;	/*1.2; */
+	double decrease_factor = ann->rprop_decrease_factor;	/*0.5; */
+	double delta_min = ann->rprop_delta_min;	/*0.0; */
+	double delta_max = ann->rprop_delta_max;	/*50.0; */
 
 	unsigned int i = first_weight;
 
@@ -1034,17 +1034,17 @@ void fann_update_weights_sarprop(struct fann *ann, unsigned int epoch, unsigned 
 	fann_type prev_step, slope, prev_slope, next_step = 0, same_sign;
 
 	/* These should be set from variables */
-	float increase_factor = ann->rprop_increase_factor;	/*1.2; */
-	float decrease_factor = ann->rprop_decrease_factor;	/*0.5; */
+	double increase_factor = ann->rprop_increase_factor;	/*1.2; */
+	double decrease_factor = ann->rprop_decrease_factor;	/*0.5; */
 	/* TODO: why is delta_min 0.0 in iRprop? SARPROP uses 1x10^-6 (Braun and Riedmiller, 1993) */
-	float delta_min = 0.000001f;
-	float delta_max = ann->rprop_delta_max;	/*50.0; */
-	float weight_decay_shift = ann->sarprop_weight_decay_shift; /* ld 0.01 = -6.644 */
-	float step_error_threshold_factor = ann->sarprop_step_error_threshold_factor; /* 0.1 */
-	float step_error_shift = ann->sarprop_step_error_shift; /* ld 3 = 1.585 */
-	float T = ann->sarprop_temperature;
-	float MSE = fann_get_MSE(ann);
-	float RMSE = sqrtf(MSE);
+	double delta_min = 0.000001f;
+	double delta_max = ann->rprop_delta_max;	/*50.0; */
+	double weight_decay_shift = ann->sarprop_weight_decay_shift; /* ld 0.01 = -6.644 */
+	double step_error_threshold_factor = ann->sarprop_step_error_threshold_factor; /* 0.1 */
+	double step_error_shift = ann->sarprop_step_error_shift; /* ld 3 = 1.585 */
+	double T = ann->sarprop_temperature;
+	double MSE = fann_get_MSE(ann);
+	double RMSE = sqrtf(MSE);
 
 	unsigned int i = first_weight;
 
@@ -1074,7 +1074,7 @@ void fann_update_weights_sarprop(struct fann *ann, unsigned int epoch, unsigned 
 		else if(same_sign < 0.0)
 		{
 			if(prev_step < step_error_threshold_factor * MSE)
-				next_step = prev_step * decrease_factor + (float)rand() / RAND_MAX * RMSE * (fann_type)fann_exp2(-T * epoch + step_error_shift);
+				next_step = prev_step * decrease_factor + (double)rand() / RAND_MAX * RMSE * (fann_type)fann_exp2(-T * epoch + step_error_shift);
 			else
 				next_step = fann_max(prev_step * decrease_factor, delta_min);
 
@@ -1103,7 +1103,7 @@ void fann_update_weights_sarprop(struct fann *ann, unsigned int epoch, unsigned 
 #endif
 
 FANN_GET_SET(enum fann_train_enum, training_algorithm)
-FANN_GET_SET(float, learning_rate)
+FANN_GET_SET(double, learning_rate)
 
 FANN_EXTERNAL void FANN_API fann_set_activation_function_hidden(struct fann *ann,
 																enum fann_activationfunc_enum activation_function)
@@ -1286,19 +1286,19 @@ FANN_EXTERNAL void FANN_API fann_set_activation_steepness_output(struct fann *an
 
 FANN_GET_SET(enum fann_errorfunc_enum, train_error_function)
 FANN_GET_SET(fann_callback_type, callback)
-FANN_GET_SET(float, quickprop_decay)
-FANN_GET_SET(float, quickprop_mu)
-FANN_GET_SET(float, rprop_increase_factor)
-FANN_GET_SET(float, rprop_decrease_factor)
-FANN_GET_SET(float, rprop_delta_min)
-FANN_GET_SET(float, rprop_delta_max)
-FANN_GET_SET(float, rprop_delta_zero)
-FANN_GET_SET(float, sarprop_weight_decay_shift)
-FANN_GET_SET(float, sarprop_step_error_threshold_factor)
-FANN_GET_SET(float, sarprop_step_error_shift)
-FANN_GET_SET(float, sarprop_temperature)
+FANN_GET_SET(double, quickprop_decay)
+FANN_GET_SET(double, quickprop_mu)
+FANN_GET_SET(double, rprop_increase_factor)
+FANN_GET_SET(double, rprop_decrease_factor)
+FANN_GET_SET(double, rprop_delta_min)
+FANN_GET_SET(double, rprop_delta_max)
+FANN_GET_SET(double, rprop_delta_zero)
+FANN_GET_SET(double, sarprop_weight_decay_shift)
+FANN_GET_SET(double, sarprop_step_error_threshold_factor)
+FANN_GET_SET(double, sarprop_step_error_shift)
+FANN_GET_SET(double, sarprop_temperature)
 FANN_GET_SET(enum fann_stopfunc_enum, train_stop_function)
 FANN_GET_SET(fann_type, bit_fail_limit)
-FANN_GET_SET(float, learning_momentum)
-FANN_GET_SET(float, learning_l2_norm)
+FANN_GET_SET(double, learning_momentum)
+FANN_GET_SET(double, learning_l2_norm)
 

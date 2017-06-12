@@ -409,7 +409,7 @@ struct fann_train_data;
 FANN_EXTERNAL typedef int (FANN_API * fann_callback_type) (struct fann *ann, struct fann_train_data *train, 
 														   unsigned int max_epochs, 
 														   unsigned int epochs_between_reports, 
-														   float desired_error, unsigned int epochs);
+														   double desired_error, unsigned int epochs);
 
 
 /* ----- Data structures -----
@@ -493,16 +493,16 @@ struct fann
 	char *errstr;
 
 	/* the learning rate of the network */
-	float learning_rate;
+	double learning_rate;
 
 	/* The learning momentum used for backpropagation algorithm. */
-	float learning_momentum;
-	float learning_l2_norm;
+	double learning_momentum;
+	double learning_l2_norm;
 
 	/* the connection rate of the network
 	 * between 0 and 1, 1 meaning fully connected
 	 */
-	float connection_rate;
+	double connection_rate;
 
 	/* is 1 if shortcut connections are used in the ann otherwise 0
 	 * Shortcut connections are connections that skip layers.
@@ -587,7 +587,7 @@ struct fann
 	/* the total error value.
 	 * the real mean square error is MSE_value/num_MSE
 	 */
-	float MSE_value;
+	double MSE_value;
 
 	/* The number of outputs which would fail (only valid for classification problems)
 	 */
@@ -622,7 +622,7 @@ struct fann
 	 * fraction of its old value to count as a
 	 * significant change.
 	 */
-	float cascade_output_change_fraction;
+	double cascade_output_change_fraction;
 
 	/* No change in this number of epochs will cause
 	 * stagnation.
@@ -633,7 +633,7 @@ struct fann
 	 * fraction of its old value to count as a
 	 * significant change.
 	 */
-	float cascade_candidate_change_fraction;
+	double cascade_candidate_change_fraction;
 
 	/* No change in this number of epochs will cause
 	 * stagnation.
@@ -713,39 +713,39 @@ struct fann
 	/* Variables for use with Quickprop training */
 
 	/* Decay is used to make the weights not go so high */
-	float quickprop_decay;
+	double quickprop_decay;
 
 	/* Mu is a factor used to increase and decrease the stepsize */
-	float quickprop_mu;
+	double quickprop_mu;
 
 	/* Variables for use with with RPROP training */
 
 	/* Tells how much the stepsize should increase during learning */
-	float rprop_increase_factor;
+	double rprop_increase_factor;
 
 	/* Tells how much the stepsize should decrease during learning */
-	float rprop_decrease_factor;
+	double rprop_decrease_factor;
 
 	/* The minimum stepsize */
-	float rprop_delta_min;
+	double rprop_delta_min;
 
 	/* The maximum stepsize */
-	float rprop_delta_max;
+	double rprop_delta_max;
 
 	/* The initial stepsize */
-	float rprop_delta_zero;
+	double rprop_delta_zero;
         
 	/* Defines how much the weights are constrained to smaller values at the beginning */
-	float sarprop_weight_decay_shift;
+	double sarprop_weight_decay_shift;
 
 	/* Decides if the stepsize is too big with regard to the error */
-	float sarprop_step_error_threshold_factor;
+	double sarprop_step_error_threshold_factor;
 
 	/* Defines how much the stepsize is influenced by the error */
-	float sarprop_step_error_shift;
+	double sarprop_step_error_shift;
 
 	/* Defines how much the epoch influences weight decay and noise */
-	float sarprop_temperature;
+	double sarprop_temperature;
 
 	/* Current training epoch */
 	unsigned int sarprop_epoch;
@@ -774,36 +774,36 @@ struct fann
 	
 #ifndef FIXEDFANN
 	/* Arithmetic mean used to remove steady component in input data.  */
-	float *scale_mean_in;
+	double *scale_mean_in;
 
 	/* Standart deviation used to normalize input data (mostly to [-1;1]). */
-	float *scale_deviation_in;
+	double *scale_deviation_in;
 
 	/* User-defined new minimum for input data.
 	 * Resulting data values may be less than user-defined minimum. 
 	 */
-	float *scale_new_min_in;
+	double *scale_new_min_in;
 
 	/* Used to scale data to user-defined new maximum for input data.
 	 * Resulting data values may be greater than user-defined maximum. 
 	 */
-	float *scale_factor_in;
+	double *scale_factor_in;
 	
 	/* Arithmetic mean used to remove steady component in output data.  */
-	float *scale_mean_out;
+	double *scale_mean_out;
 
 	/* Standart deviation used to normalize output data (mostly to [-1;1]). */
-	float *scale_deviation_out;
+	double *scale_deviation_out;
 
 	/* User-defined new minimum for output data.
 	 * Resulting data values may be less than user-defined minimum. 
 	 */
-	float *scale_new_min_out;
+	double *scale_new_min_out;
 
 	/* Used to scale data to user-defined new maximum for output data.
 	 * Resulting data values may be greater than user-defined maximum. 
 	 */
-	float *scale_factor_out;
+	double *scale_factor_out;
 #endif
 };
 

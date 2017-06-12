@@ -297,7 +297,7 @@ namespace FANN {
      */
     typedef int (*callback_type)(neural_net &net, training_data &train,
                                  unsigned int max_epochs, unsigned int epochs_between_reports,
-                                 float desired_error, unsigned int epochs, void *user_data);
+                                 double desired_error, unsigned int epochs, void *user_data);
 }
 
 #endif //FANN_FANN_DATA_CPP_H_H
