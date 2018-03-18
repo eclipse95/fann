@@ -406,7 +406,7 @@ FANN_EXTERNAL double FANN_API fann_train_epoch_sarprop_parallel(struct fann *ann
     	}
 
     	MSE = fann_get_MSE(ann);
-    	RMSE = sqrtf(MSE);
+    	RMSE = sqrt(MSE);
 
     	/* for all weights; TODO: are biases included? */
 		omp_set_dynamic(0);

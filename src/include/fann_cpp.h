@@ -2917,6 +2917,14 @@ namespace FANN {
             fann_enable_seed_rand();
         }
 
+		/* Function get_ann
+
+		Get intern C structure (fann).
+
+		This function is a little hack to use parallel training.
+		*/
+		fann* get_ann() { return ann; }
+
         /*********************************************************************/
 
     private:
@@ -2951,6 +2959,7 @@ namespace FANN {
         }
 
 #endif  /* NOT FIXEDFANN */
+
 
     protected:
         // Pointer the encapsulated fann neural net structure

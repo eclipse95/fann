@@ -41,7 +41,7 @@ using std::noshowpos;
 // Callback function that simply prints the information to cout
 int print_callback(FANN::neural_net &net, FANN::training_data &train,
     unsigned int max_epochs, unsigned int epochs_between_reports,
-    float desired_error, unsigned int epochs, void *user_data)
+    double desired_error, unsigned int epochs, void *user_data)
 {
     cout << "Epochs     " << setw(8) << epochs << ". "
          << "Current Error: " << left << net.get_MSE() << right << endl;

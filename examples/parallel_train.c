@@ -27,7 +27,7 @@ int main(int argc, const char* argv[])
 	struct fann_train_data *data;
 	struct fann *ann;
 	long before;
-	float error;
+	double error;
 	unsigned int i;
 
 	if(argc == 2)

@@ -237,6 +237,14 @@ namespace FANN {
             }
         }
 
+		/* Function get_train_data
+
+		Get intern C structure (fann_train_data).
+
+		This function is a little hack to use parallel training.
+		*/
+		fann_train_data* get_train_data() { return train_data; }
+
         /* Method: get_input
             Grant access to the encapsulated data since many situations
             and applications creates the data from sources other than files
